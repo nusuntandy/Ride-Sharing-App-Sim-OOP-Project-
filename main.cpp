@@ -10,15 +10,23 @@ int main(void ) {
     //TEST 1
     std::cout << "Simulare cursa:\n\n";
 
-    Driver d1("Silviu Candale", 5.0, "BMW", true);
-    d1.afisare();
+    Driver drivers[] = {
+        Driver("Silviu Candale", 5.0, "BMW", true)
+    };
 
-    Client c1("Nedelcu Andy", 5.0);
-    c1.afisare();
+    drivers[0].afisare();
+
+    Client clients[] = {
+        Client("Nedelcu Andy", 5.0)
+    };
+
+    
+    clients[0].afisare();
+
 
     std::cout << "\n";
 
-    Ride* r1 = requestRide(&c1, &d1, "Centru", "Aeroport");
+    Ride* r1 = requestRide(&clients[0], drivers, "Centru", "Aeroport");
 
     if(r1 != nullptr) {
         r1->updateStatus(REQUESTED);
@@ -47,12 +55,12 @@ int main(void ) {
     //TEST 2
     std::cout << "Simulare cursa:\n\n";
 
-    d1.afisare();
-    c1.afisare();
+    drivers[0].afisare();
+    clients[0].afisare();
     std::cout << "\n";
 
-    r1 = requestRide(&c1, &d1, "Centru", "Aeroport");
-    c1.cancelRide(&r1);
+    r1 = requestRide(&clients[0], drivers, "Centru", "Aeroport");
+    clients[0].cancelRide(&r1);
 
     r1 = nullptr;
     return 0;
