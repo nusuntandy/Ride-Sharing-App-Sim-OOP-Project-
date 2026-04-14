@@ -1,39 +1,33 @@
 #include <iostream>
 
-//OTHER INCLUDES
 #include "src/User.cpp"
 #include "src/Driver.cpp"
 #include "src/Client.cpp"
 #include "src/Ride.cpp"
 
 int main(void ) {
+    srand(time(NULL));
+
+    int n = 1, m = 1;
+    Driver drivers[1] = {
+        Driver("Silviu Candale", 18, 5.0, 100, "BMW", true)
+    };
+
+    Client clients[m] = {
+        Client("Nedelcu Andy", 18, 5.0, 130)
+    };
+
     //TEST 1
+    Ride *r1;
+
     std::cout << "Simulare cursa:\n\n";
+    try {
+        r1 = requestRide(&clients[0], drivers, n, "Centru", "Aeroport");
 
-    Driver drivers[] = {
-        Driver("Silviu Candale", 5.0, "BMW", true)
-    };
-
-    drivers[0].afisare();
-
-    Client clients[] = {
-        Client("Nedelcu Andy", 5.0)
-    };
-
-    
-    clients[0].afisare();
-
-
-    std::cout << "\n";
-
-    Ride* r1 = requestRide(&clients[0], drivers, "Centru", "Aeroport");
-
-    if(r1 != nullptr) {
-        r1->updateStatus(REQUESTED);
         r1->showStatus();
         std::cout << "\n";
 
-        r1->updateStatus(ACCEPTED);
+        acceptRide(r1->getDriver(), r1);
         r1->showStatus();
         std::cout << "\n";
 
@@ -45,23 +39,27 @@ int main(void ) {
         r1->showStatus();
         std::cout << "\n";
 
-        delete r1;
+        delete r1;        
+    } catch(const std::runtime_error &e) {
+        std::cout << e.what() << "\n";
+        
+        if(r1 != nullptr)
+            delete r1;
     }
-    else
-        std::cout << "Nu au fost gasiti soferi disponibili!\n";
-
+    
     std::cout << "Sfarsit simulare\n\n";
 
     //TEST 2
     std::cout << "Simulare cursa:\n\n";
+    try {
+        r1 = requestRide(&clients[0], drivers, n, "Centru", "Aeroport");
+        cancelRide(r1->getDriver(), &r1);
+    } catch(const std::runtime_error &e) {
+        std::cout << e.what() << "\n";
 
-    drivers[0].afisare();
-    clients[0].afisare();
-    std::cout << "\n";
+        if(r1 != nullptr)
+            delete r1;
+    }
 
-    r1 = requestRide(&clients[0], drivers, "Centru", "Aeroport");
-    clients[0].cancelRide(&r1);
-
-    r1 = nullptr;
     return 0;
 }
