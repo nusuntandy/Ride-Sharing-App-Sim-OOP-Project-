@@ -23,10 +23,20 @@ private:
 public:
     Ride(Client* c, Driver* d, std::string lS, std::string lF);
 
+    ~Ride();
+
+    friend Ride* requestRide(Client* client, Driver* drivers, int dL, const std::string lS, const std::string lF);
+
+    friend void cancelRide(const Client *client, Ride *ride);
+    friend void cancelRide(const Driver *driver, Ride *ride);
+
+    friend void acceptRide(const Driver *driver, Ride *ride);
+
+    Driver* getDriver(void );
+    Client* getClient(void );
+
     void updateStatus(enum status stat);
-
     void showStatus() const;
-
     int calculeazaPret() const;
 };
 #endif
