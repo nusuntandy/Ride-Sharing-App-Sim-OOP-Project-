@@ -6,15 +6,18 @@ private:
     bool disponibil;
 
 public:
-    Driver(std::string nume, float rating, std::string masina, bool disponibil);
+    Driver(std::string nume, int age, float rating, int balance, std::string masina, bool disponibil);
+
+    ~Driver();
+
+    void setDisponibil(bool val);
+    void setMasina(std::string m);
 
     std::string getMasina() const;
     bool getDisponibil() const;
 
     void acceptRide();
-
     void finishRide();
-
     void afisare() const override;
 };
 #endif
