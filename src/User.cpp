@@ -2,16 +2,19 @@
 
 int User::nextID = 0;
 
-int User::genereazaID() {
-    nextID++;
-    return nextID;
+User::User(std::string nume = "Necunoscut", int age = 18, float rating = 0.0, int balance = 100) : id(genereazaID()), nume(nume), rating(rating), balance(balance) {
+    std::cout << "[Constructor] Class User called\n";
 }
 
-User::User() : id(genereazaID()), nume("Necunoscut"), rating(0.0) {}
-User::User(std::string nume, float rating) : id(genereazaID()), nume(nume), rating(rating) {}
+User::~User() {
+    nextID--;
+    std::cout << "[Destructor] Class User called\n";
+}
 
 int User::getID() const { return id; }
 std::string User::getNume() const { return nume; }
+int User::getAge() const { return age; }
+int User::getBalance() const { return balance; }
 float User::getRating() const { return rating; }
 
 void User::setID(int ID) {
@@ -22,10 +25,19 @@ void User::setNume(std::string nume) {
     this->nume = nume;
 }
 
+void User::setAge(int a) {
+    this->age = a;
+}
+
+void User::setBalance(int b) {
+    this->balance = b;
+}
+
 void User::setRating(float rating) {
     this->rating = rating;
 }
 
-void User::afisare() const {
-    std::cout << id << ". " << nume << ", Rating: " << rating << "\n";
+int User::genereazaID() {
+    nextID++;
+    return nextID;
 }
