@@ -1,16 +1,11 @@
 #include "../includes/Client.h"
-#include "../includes/Ride.h"
 
-Client::Client(std::string nume, float rating) : User(nume, rating) {}
+Client::Client(std::string nume = "necunoscut", int age = 18, float rating = 0.0, int balance = 100.0) : User(nume, age, rating, balance) {
+    std::cout << "[Constructor] Class Client called\n";
+}
 
-void Client::cancelRide(Ride **ride) {
-    std::cout << nume << " a anulat cursa.";
-
-    Ride *currentRide = *ride;
-    currentRide->updateStatus(CANCELED);
-    delete currentRide;
-
-    *ride = nullptr;
+Client::~Client() {
+    std::cout << "[Destructor] Class Client called\n";
 }
 
 void Client::afisare() const {
