@@ -16,7 +16,6 @@ public:
     std::string getMasina() const;
     bool getDisponibil() const;
 
-    void acceptRide();
     void finishRide();
     void afisare() const override;
 };
