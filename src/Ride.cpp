@@ -90,15 +90,22 @@ Ride* requestRide(Client* client, Driver* drivers, int dL, const std::string lS,
     std::cout << client->getNume() << " a solicitat o cursa\n";
     std::cout << "Se cauta soferi..." << "\n";
 
-    for(int i = 0; i < dL; i++) {
-        int dRand = rand() % dL;
+    int driversAvailable = 0;
+    for(int i = 0; i < dL; i++) 
+        if(drivers[i].getDisponibil())
+            driversAvailable++;
 
-        if(drivers[dRand].getDisponibil())
-            return new Ride(client, &drivers[dRand], lS, lF);
-    }
+    if(!driversAvailable)
+        throw std::runtime_error("Nu au fost gasiti soferi disponibili!");
+        
+    Driver* currentDrivers[driversAvailable];
+    driversAvailable = 0;
+    for(int i = 0; i < dL; i++)
+        if(drivers[i].getDisponibil())
+            currentDrivers[driversAvailable++] = &drivers[i];
 
-    throw std::runtime_error("Nu au fost gasiti soferi disponibili!");
-    return nullptr;
+    int dRand = rand() % driversAvailable;
+    return new Ride(client, currentDrivers[dRand], lS, lF);
 }
 
 void cancelRide(const Client *c, Ride **ride) {
